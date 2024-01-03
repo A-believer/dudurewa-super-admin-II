@@ -1,13 +1,10 @@
-"use client"
-import React from 'react'
 import { useRef } from "react";
 import { motion, useCycle } from "framer-motion"
 import { Logo } from './'
-import Link from 'next/link'
 import { useDimensions } from '@/lib/use-dimensions';
 import Navigation from './navigation';
 import MenuToggle from './menu-toggle';
-import NavigationDesktop from './navigationDesktop';
+import { Link } from "react-router-dom";
 
 const sidebar = {
   open: (height = 1000) => ({
@@ -35,7 +32,7 @@ export default function NavBar() {
   const { height } = useDimensions(containerRef);
   return (
       <header className='sticky top-0 left-0 xl:hidden flex justify-between items-center w-[95%] max-w-full mx-auto h-full z-50 bg-background pb-2'>
-          <Link href={`/`}>
+          <Link to={`/`}>
               <Logo />
       </Link>
       

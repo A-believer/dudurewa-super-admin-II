@@ -1,31 +1,29 @@
-"use client"
-import React from 'react'
-import { motion, useCycle } from "framer-motion"
-import { Footer, Logo } from './index'
-import Link from 'next/link'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { motion} from "framer-motion"
+import { Logo } from './index'
 import NavigationDesktop from './navigationDesktop';
 import { useAuth } from '@/lib/context/AuthContext'
 import { Button } from './ui/button'
-import { useRouter } from 'next/navigation'
 import { Logout } from 'iconsax-react'
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function NavBarDesktop() {
     const { user, logOut } = useAuth()
-     const router = useRouter()
+     const navigate = useNavigate()
 
   const handleLogOut = async (e: any) => {
     e.preventDefault()
     try {
       await logOut()
-      router.push(`/auth/login`)
+      navigate(`/auth/login`)
     } catch (error: any) {
       alert(error.message)
     }
   }
   return (
       <header className=' xl:flex hidden flex-col justify-between items-center  max-w-[20%] w-full mx-auto z-50 bg-background border-r-2 h-screen pb-5'>
-          <Link href={`/`}
+          <Link to={`/`}
           >
               <Logo />
       </Link>
@@ -49,7 +47,7 @@ export default function NavBarDesktop() {
             </Button>}
  
               
-               <h2 className='w-full mx-auto text-center '>Made with 💜 by <br />  <Link target='_blank' href={`https://davidabolade-portfolio.vercel.app/`} className='text-orange'>`<span className='underline underline-offset-4'>Nimi</span></Link></h2>
+               <h2 className='w-full mx-auto text-center '>Made with 💜 by <br />  <a target='_blank' href={`https://davidabolade-portfolio.vercel.app/`} className='text-orange'>`<span className='underline underline-offset-4'>Nimi</span></a></h2>
           </div>
 
         

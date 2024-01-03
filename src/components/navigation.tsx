@@ -1,10 +1,8 @@
-import * as React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useAuth } from "@/lib/context/AuthContext";
 import { Button } from "./ui/button";
-import { usePathname, useRouter } from "next/navigation";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const variants = {
   open: {
     transition: { staggerChildren: 0.07, delayChildren: 0.2 }
@@ -42,8 +40,9 @@ const navMenuItems = [
 
 const Navigation = ({ toggle }: {toggle: () => void}) => {
   const { user, logOut } = useAuth()
-  const router = useRouter()
-    const routerLink = usePathname()
+  const navigate = useNavigate()
+    const location = useLocation()
+    
 
 
   const handleLogOut = async (e: any) => {
@@ -51,7 +50,7 @@ const Navigation = ({ toggle }: {toggle: () => void}) => {
     try {
       await logOut()
      toggle
-      router.push(`/auth/login`)
+    navigate(`/auth/login`)
     } catch (error: any) {
       alert(error.message)
     }
@@ -62,14 +61,14 @@ const Navigation = ({ toggle }: {toggle: () => void}) => {
     {navMenuItems.map((item) => (
         
       <motion.li
-        className={`border-b-2 border-foreground py-2 px-4 mx-10 text-lg rounded-b-2xl hover:border-background hover:bg-orange hover:text-background ${routerLink === item.link && "bg-orange text-background border-background"}`}
+        className={`border-b-2 border-foreground py-2 px-4 mx-10 text-lg rounded-b-2xl hover:border-background hover:bg-orange hover:text-background ${location.pathname === item.link && "bg-orange text-background border-background"}`}
         key={item.id}
             onClick={toggle}
       variants={itemVariants}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
     >
-        <Link href={item.link} className={`w-full gap-x-4 flex items-center justify-center`}>{item.title}</Link>
+        <Link to={item.link} className={`w-full gap-x-4 flex items-center justify-center`}>{item.title}</Link>
     </motion.li>
     ))}
     {user &&
@@ -91,7 +90,7 @@ const Navigation = ({ toggle }: {toggle: () => void}) => {
           <motion.li variants={itemVariants}
           whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }} className="w-fit mx-auto">
-            <Link href={`/auth/login`} className="w-full px-5 text-foreground border-4 border-orange hover:bg-orange hover:text-background hover:scale-105 transition-all duration-500 rounded-md">Login</Link>
+            <Link to={`/auth/login`} className="w-full px-5 text-foreground border-4 border-orange hover:bg-orange hover:text-background hover:scale-105 transition-all duration-500 rounded-md">Login</Link>
         </motion.li>}
   </motion.ul>)
 };

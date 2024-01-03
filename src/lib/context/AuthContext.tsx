@@ -1,5 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-"use client"
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import {
     createUserWithEmailAndPassword,
@@ -43,7 +44,7 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
 
   
 
-    const signUp = async (email: string, password: string, userName: string) => {
+    const signUp = async (email: string, password: string) => {
     try {
        const userCred = await createUserWithEmailAndPassword(
         auth,

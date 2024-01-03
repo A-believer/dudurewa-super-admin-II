@@ -1,4 +1,4 @@
-import * as React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
 
 const Path =( props: any) => (

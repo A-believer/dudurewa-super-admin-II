@@ -1,8 +1,7 @@
-import * as React from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { AlignBottom, Calendar, Category, DollarSquare, Gift} from "iconsax-react";
-import { usePathname } from "next/navigation";
+import {Link, useLocation} from "react-router-dom"
+
 
 const variants = {
   open: {
@@ -40,20 +39,20 @@ const navMenuItems = [
 
 
 const NavigationDesktop = () => {
-    const router = usePathname()
+    const location = useLocation()
     
     return(
   <motion.ul variants={variants} className="w-full flex flex-col items-center justify-center gap-y-10 text-center z-50 text-orange py-5">
     {navMenuItems.map((item) => (
         
       <motion.li
-        className={`border-b-2 border-foreground py-2 px-7 mx-10 rounded-b-2xl hover:border-background hover:bg-orange hover:text-background ${router === item.link && "bg-orange text-background border-background"}`}
+        className={`border-b-2 border-foreground py-2 px-7 mx-10 rounded-b-2xl hover:border-background hover:bg-orange hover:text-background ${location.pathname === item.link && "bg-orange text-background border-background"}`}
             key={item.id}
       variants={itemVariants}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
     >
-        <Link href={item.link} className={`w-full gap-x-4 flex items-center justify-center `}>
+        <Link to={item.link} className={`w-full gap-x-4 flex items-center justify-center `}>
              <span>
                 {item.icon}
             </span>
