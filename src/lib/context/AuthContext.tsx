@@ -53,7 +53,6 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
       );
       const user = userCred.user;
       setUser(user);
-
        sessionStorage.setItem('user', "true")
     } catch (error: any) {
       console.error(error.message)
@@ -120,13 +119,10 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {  
       setUser(user)
       setLoading(false)
-  console.log(user)
-
       })
    return () => unsubscribe()
   }, [])   
   
-  console.log(user)
 
   const authProviderValue: AuthProviderProps = {
     logIn, logOut, user, signUp, addTodoHandler, loading, todo, loadingTodo, getTodoList

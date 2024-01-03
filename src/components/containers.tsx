@@ -1,24 +1,41 @@
+import { Footer, Logo, NavBar, NavBarDesktop } from "./";
+import { ModeToggle } from "./mode-toggle"
 
-export  function AuthContainer({children} : {children: React.ReactNode}) {
+export  function AdminContainer({ children, classname }: { children: React.ReactNode; classname: string}) {
   return (
-    <main>
-      {children}
+    <main className={`relative min-h-screen h-full max-w-[1520px] xl:w-full w-[90%] mx-auto flex xl:flex-row flex-col ${classname}`}>
+      <NavBarDesktop/>
+      <section className="xl:w-[80%]">
+        <NavBar />
+        {children}
+      </section>
+      <Footer/>
+      <div className='fixed right-5 bottom-5 opacity-50 hover:opacity-100 z-50'>
+          <ModeToggle/>
+      </div>
     </main>
   )
 }
 
-export  function AdminContainer({children} : {children: React.ReactNode}) {
+export function Container({ children, classname }: { children: React.ReactNode; classname: string}) {
   return (
-    <main className="mon-h-screen">
-      {children}
-    </main>
-  )
-}
+    <main className={`relative min-h-screen h-full max-w-[1520px] w-[90%] mx-auto`}>
 
-export  function Container({children} : {children: React.ReactNode}) {
-  return (
-    <main className="min-h-screen max-w-[1520px] w-[90%] flex flex-col gap-y-10 items-center justify-center mx-auto">
+      <div className="sticky top-0 left-2 w-full mx-auto z-[50] bg-background pb-2">
+        <Logo/>
+      </div>
+
+      <section className={`flex flex-col items-center justify-center h-full ${classname}`}>
       {children}
+      </section>
+
+      <div className="sticky bottom-0 left-0 w-full mx-auto z-[50] bg-background">
+        <Footer/>
+      </div>
+      
+      <div className='fixed right-5 bottom-5 opacity-50 hover:opacity-100 z-50'>
+          <ModeToggle/>
+      </div>
     </main>
   )
 }

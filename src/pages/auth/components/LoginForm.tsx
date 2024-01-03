@@ -22,10 +22,8 @@ export default function Form() {
         try {
             await logIn(email, password);
             reset()
-                navigate('/dashboard')
-              toast.success("You're logged in!")  
-            
-            
+            navigate('/dashboard')
+            toast.success("You're logged in!")
         } catch (error: any) {
             console.log({error})
         } 

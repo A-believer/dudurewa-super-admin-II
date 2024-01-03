@@ -6,10 +6,12 @@ import {
   motion} from "framer-motion";
 import { onboardingCardData } from "../../lib/data";
 import { Link } from "react-router-dom";
+import { Container } from "@/components/containers";
+import React from "react";
 
 const cardVariants: Variants = {
   offscreen: {
-    y: 450,
+    y: 500,
   },
   onscreen: {
     y: 0,
@@ -25,14 +27,14 @@ const cardVariants: Variants = {
 
 export default function Onboarding() {
 
-  function Card({ src, tag, info, description, key }: { src: string; tag: string; info: string; description: string; key: number;  index: number}) {  
+  function Card({ src, tag, info, description }: { src: string; tag: string; info: string; description: string; index: number}) {  
   return (
        <motion.div
              initial="offscreen"
       whileInView="onscreen"
       viewport={{ once: true, amount: 0.8 }}
-      className="relative overflow-hidden xl:w-[500px] w-full h-[450px] mx-auto my-5 rounded-xl z-10"
-            key={key}>
+      className="relative overflow-hidden xl:w-[500px] w-full h-[500px] mx-auto mb-5 rounded-xl z-10"
+            >
       
           <img src={src} alt="image" className="w-full h-full object-cover object-center z-10"/>
       <motion.div
@@ -50,18 +52,20 @@ export default function Onboarding() {
 }
 
   return (
-    <div className="xl:py-10 py-5 space-y-10 pb-10 w-fit  overflow-scroll no-scrollbar relative max-w-[1520px] mx-auto min-h-screen h-full selection:text-orange selection:bg-foreground flex flex-col">
+    <Container classname="overflow-hidden mt-[40px] mb-[76px]">
         {onboardingCardData?.map((item, i) => (
+          <React.Fragment key={item.id}>
             <Card
-                key={item.id}
                 index={i}
             src={item?.imageSrc}
             tag={item?.tag}
             info={item?.info}
             description={item?.description} />
+          </React.Fragment>
+            
       ))}
 
-      <p className="w-full text-center flex items-center justify-center gap-x-4 text-2xl underline underline-offset-4"><span>Ready for the fun? Let`s go!😊</span></p>
+      <p className="w-full text-center flex items-center justify-center gap-x-4 text-2xl underline underline-offset-4 pb-10"><span>Ready for the fun? Let`s go!😊</span></p>
 
       <div className="flex flex-col gap-y-5 items-center justify-center w-full">
         <Link to={`/auth/login`} className='text-2xl border-4 border-orange py-3 px-4 w-fit mx-auto rounded-2xl flex items-center gap-x-3'>Click here to Login</Link>
@@ -69,6 +73,6 @@ export default function Onboarding() {
         <Link to={`/auth/register`} className='text-2xl border-4 border-orange py-3 px-4 w-fit mx-auto rounded-2xl flex items-center gap-x-3'>Click here to Register</Link>
       </div>
       
-    </div>
+    </Container>
   );
 }

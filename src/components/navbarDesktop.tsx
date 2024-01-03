@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { motion} from "framer-motion"
 import { Logo } from './index'
 import NavigationDesktop from './navigationDesktop';
 import { useAuth } from '@/lib/context/AuthContext'
@@ -22,17 +21,17 @@ export default function NavBarDesktop() {
     }
   }
   return (
-      <header className=' xl:flex hidden flex-col justify-between items-center  max-w-[20%] w-full mx-auto z-50 bg-background border-r-2 h-screen pb-5'>
+      <header className=' xl:flex hidden flex-col justify-between items-center w-[200px] mx-auto z-50 bg-background border-r-2 h-screen pb-5'>
           <Link to={`/`}
           >
               <Logo />
       </Link>
       
-          <motion.nav
+          <nav
               className='xl:flex flex-col hidden z-50'>
         
         <NavigationDesktop/>
-          </motion.nav>
+          </nav>
 
           <hr  className='mx-4 text-orange border-0 h-2'/>
 

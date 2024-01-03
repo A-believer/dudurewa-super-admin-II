@@ -1,5 +1,5 @@
 import {motion} from "framer-motion"
-import { logo } from "public/pngs"
+import { logo } from "../../public/pngs"
 
 export default function Logo() {
   return (

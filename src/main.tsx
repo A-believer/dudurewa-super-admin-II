@@ -16,6 +16,8 @@ import History from './pages/dashboard/History.tsx'
 import Order from './pages/dashboard/Order.tsx'
 import Todolist from './pages/dashboard/Todolist.tsx'
 import ErrorPage from './error-page.tsx'
+import { AuthProvider } from './lib/context/AuthContext.tsx'
+import DashboardLayout from './pages/dashboard/components/DashboardLayout.tsx'
 
 
 const router = createHashRouter([
@@ -43,9 +45,15 @@ const router = createHashRouter([
       },
          {
         path: "/dashboard",
-           element: <Dashboard />,
+           element: <DashboardLayout />,
            errorElement: <ErrorPage />,
            children: [
+           {
+               path: "/dashboard",
+           element: <Dashboard />,
+    errorElement: <ErrorPage />,
+               
+             },
             {
                path: "expense",
            element: <Expense />,
@@ -78,8 +86,11 @@ const router = createHashRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <AuthProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
        <RouterProvider router={router} />
     </ThemeProvider>
+    </AuthProvider>
+    
   </React.StrictMode>,
 )

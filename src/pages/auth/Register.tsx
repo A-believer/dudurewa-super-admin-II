@@ -1,6 +1,10 @@
+import { Container } from "@/components/containers";
+import Form from "./components/RegisterForm";
 
 export default function Register() {
   return (
-    <div>Register</div>
+    <Container classname="">
+      <Form/>
+    </Container>
   )
 }

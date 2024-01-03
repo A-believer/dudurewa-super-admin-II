@@ -30,11 +30,11 @@ const itemVariants = {
 };
 
 const navMenuItems = [
-  {id: 1, link: "/admin/dashboard", title: "Dashboard"},
-  {id: 2, link: "/admin/expense", title: "Expenses"},
-  {id: 3, link: "/admin/history", title: "History"},
-  {id: 4, link: "/admin/order", title: "Orders"},
-  {id: 5, link: "/admin/todolist", title: "Todo List"},
+  {id: 1, link: "/dashboard", title: "Dashboard"},
+  {id: 2, link: "/dashboard/expense", title: "Expenses"},
+  {id: 3, link: "/dashboard/history", title: "History"},
+  {id: 4, link: "/dashboard/order", title: "Orders"},
+  {id: 5, link: "/dashboard/todolist", title: "Todo List"},
 ]
 
 
