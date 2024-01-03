@@ -16,7 +16,7 @@ interface FormData {
 }
 
 export default function Form() {
-    const { signUp, user } = useAuth()
+    const { signUp } = useAuth()
     const navigate = useNavigate()
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
     resolver: yupResolver(signUpformSchema),
