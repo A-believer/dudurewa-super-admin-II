@@ -1,9 +1,11 @@
 import { Footer, Logo, NavBar, NavBarDesktop } from "./";
 import { ModeToggle } from "./mode-toggle"
+import ProtectedRouteWrapper from "./protected-routes";
 
 export  function AdminContainer({ children, classname }: { children: React.ReactNode; classname: string}) {
   return (
-    <main className={`relative min-h-screen h-full max-w-[1520px] xl:w-full w-[90%] mx-auto flex xl:flex-row flex-col ${classname}`}>
+    <ProtectedRouteWrapper>
+      <main className={`relative min-h-screen h-full max-w-[1520px] xl:w-full w-[90%] mx-auto flex xl:flex-row flex-col ${classname}`}>
       <NavBarDesktop/>
       <section className="xl:w-[80%]">
         <NavBar />
@@ -14,6 +16,8 @@ export  function AdminContainer({ children, classname }: { children: React.React
           <ModeToggle/>
       </div>
     </main>
+    </ProtectedRouteWrapper>
+    
   )
 }
 

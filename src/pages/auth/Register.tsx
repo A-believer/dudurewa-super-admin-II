@@ -3,7 +3,7 @@ import Form from "./components/RegisterForm";
 
 export default function Register() {
   return (
-    <Container classname="">
+    <Container classname="h-fit py-10">
       <Form/>
     </Container>
   )
