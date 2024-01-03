@@ -1,0 +1,7 @@
+export { default as logo } from "./dudurewa.png"
+export { default as  shawarmaOnboarding1 } from "./shawarma-onboarding-1.jpg"
+export { default as  shawarmaOnboarding2 } from "./shawarma-onboarding-2.jpg"
+export { default as  shawarmaOnboarding3 } from "./shawarma-onboarding-3.jpg"
+export { default as  shawarmaOnboarding4 } from "./shawarma-onboarding-4.jpg"
+export { default as  shawarmaOnboarding5 } from "./shawarma-onboarding-5.jpg"
+export { default as  shawarmaOnboarding6 } from "./shawarma-onboarding-6.jpg"
