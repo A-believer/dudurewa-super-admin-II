@@ -8,7 +8,16 @@ import { useEffect } from "react";
 import { FirestoreProvider } from "@/lib/context/FirestoreContext";
 import { Toaster } from "react-hot-toast";
 
-export  function AdminContainer({ children, classname }: { children: React.ReactNode; classname: string}) {
+export function AdminContainer({ children, classname }: { children: React.ReactNode; classname: string }) {
+  
+  const { user } = useAuth()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+ if (!user) {
+    navigate('/auth/login')
+  }
+  }, [])
   return (
     <FirestoreProvider>
       <ProtectedRouteWrapper>
@@ -32,14 +41,7 @@ export  function AdminContainer({ children, classname }: { children: React.React
 }
 
 export function Container({ children, classname }: { children: React.ReactNode; classname: string }) {
-   const { user } = useAuth()
-  const navigate = useNavigate()
-
-  useEffect(() => {
- if (user) {
-    navigate('/dashboard')
-  }
-  }, [])
+   
   
  
   return (
