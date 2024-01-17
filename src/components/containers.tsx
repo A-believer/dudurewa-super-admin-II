@@ -9,8 +9,6 @@ import { FirestoreProvider } from "@/lib/context/FirestoreContext";
 import { Toaster } from "react-hot-toast";
 
 export function AdminContainer({ children, classname }: { children: React.ReactNode; classname: string }) {
-  
-  
   return (
     <FirestoreProvider>
       <ProtectedRouteWrapper>

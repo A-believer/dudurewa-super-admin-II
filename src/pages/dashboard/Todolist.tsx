@@ -12,12 +12,7 @@ import { useFirestore } from '@/lib/context/FirestoreContext'
 
 export default function Todolist() {
   const [openForm, setOpenForm] = useState<boolean>(false)
-  const [descriptionToggle, setDescriptionToggle] = useState<string | null>(null)
   const {todo, getTodoList, loadingTodo} = useFirestore() 
-
-    function handleDescriptionOpen(id: string) {
-    setDescriptionToggle((prevIndex) => (prevIndex === id ? null : id));
-  }
 
   const deleteTodo = async(id: string) => {
     try {
@@ -78,19 +73,16 @@ export default function Todolist() {
           
           {todo.length > 0 &&
             todo?.map((item) => (
-            <div key={item.id} className='flex flex-col gap-y-3 w-full p-3 bg-foreground/5 rounded-2xl'>
-                <div className='w-full flex items-center justify-between gap-x-10'>
-                  
-              <p className='text-foreground/90 whitespace-normal' onClick={() => handleDescriptionOpen(item?.id)}>
-                  {descriptionToggle === item?.id  ?
-                    item?.todo :
-                    item?.todo.slice(0, 50) + (item?.todo?.length > 50 ? "...read more" : "")}
-                  </p>
+              <div key={item.id} className='w-full flex items-center justify-between gap-x-10 p-3 bg-foreground/5 rounded-2xl'>
+                
+              <p className='text-foreground/90 w-[80%] text-wrap' >
+                    {item?.todo}
+              </p>
                   
                <div className='flex items-center gap-x-2 self-start'>
                 <Button variant={'ghost'} className='px-0' onClick={() => updateTodoStatus(item.id)}>{!item.status ? <ClipboardText className='text-gray-500' /> : <ClipboardTick className='text-green-500' />}</Button>
                 <Button variant={'ghost'} className='px-0' onClick={() => deleteTodo(item.id)}><Trash className='text-red-800 font-bold' /></Button>
-              </div>
+              
               </div>
 
               

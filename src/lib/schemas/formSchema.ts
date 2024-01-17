@@ -39,7 +39,7 @@ export const loginFormSchema = z
   .object({
     todo: z.string({
     required_error: "you have not entered yor todo",
-  }).max(100),
+  }).max(500),
   })
   
 
@@ -55,6 +55,3 @@ export const loginFormSchema = z
     deliveryOption: z.string(),
     message: z.string()
   })
-  
-
-  // create a webapp with react vite and firebase for taking orders. Each order has an order name, order type and price. create two collections in firebase, one to take each order with as they come in with unique ids and the other collection with each document with an id of the date with a array that contains all the data for that day, the array updates anytime an order is created. 
