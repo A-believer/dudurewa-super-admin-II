@@ -37,11 +37,8 @@ export const loginFormSchema = z
 
   export const todoFormSchema = z
   .object({
-    title: z.string({
-    required_error: "title is required",
-  }).max(50),
-    description: z.string({
-    required_error: "title is required",
+    todo: z.string({
+    required_error: "you have not entered yor todo",
   }).max(100),
   })
   

@@ -12,9 +12,8 @@ children: ReactNode;
 
 interface TodoProps {
   id: string
-  title: string
+  todo: string
   status: boolean
-  description: string
 }
 
 interface OrderProps {
@@ -32,7 +31,7 @@ interface OrderProps {
 }
 
 interface FirestoreProviderProps {
-    addTodoHandler: (title: string, description: string) => Promise<void>
+    addTodoHandler: (todo: string) => Promise<void>
     addNewOrderHandler:  (
         customerName: string,
         shawarmaType: string,
@@ -65,11 +64,10 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
   const [loadingOrder, setLoadingOrder] = useState<boolean>(true)
   const [shawarmaTypePrice, setShawarmaTypePrice] = useState<number>(0)
     
-    const addTodoHandler = async(title:string, description: string) => {
+    const addTodoHandler = async(todo:string) => {
     try {
       await setDoc(doc(db, "Todos", uuidv4()), {
-        title: title,
-        description: description,
+        todo: todo,
         status: false,
         timestamp: serverTimestamp()
       });
@@ -184,9 +182,6 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
       toast.error('failed to fetch todos!!')
     }
   }
-
- 
-
   
 
     const firestoreProviderValue: FirestoreProviderProps = {

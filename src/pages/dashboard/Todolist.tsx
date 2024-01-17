@@ -49,13 +49,17 @@ export default function Todolist() {
   }, [])
 
   return (
-    <div className='w-full flex flex-col gap-y-5 py-6 relative'>
+    <div className='w-full flex flex-col gap-y-5 py-6 relative justify-center '>
       
       <p className='text-xl font-black uppercase'>My Todo List</p>
      
-      {openForm && <Form close={() => setOpenForm(false)} />}
+      {openForm &&
+        <div className='absolute top-0 left-0 bg-black/10 flex items-center justify-center w-full h-full'>
+          <Form close={() => setOpenForm(false)} />
+        </div>
+        }
 
-      <div className='border border-foreground/50 p-5 flex flex-col justify-center items-center gap-y-10 w-full rounded-2xl relative mt-5'>
+      <div className='max-w-[600px] mx-auto border border-foreground/50 p-5 flex flex-col justify-center items-center gap-y-10 w-full rounded-2xl relative mt-5'>
         <Button
           variant={'outline'}
          className="flex items-center gap-x-2 md:text-lg text-sm border-[3px] border-orange py-5 px-4 w-fit ml-auto rounded-xl hover:bg-orange place-self-end"
@@ -75,19 +79,21 @@ export default function Todolist() {
           {todo.length > 0 &&
             todo?.map((item) => (
             <div key={item.id} className='flex flex-col gap-y-3 w-full p-3 bg-foreground/5 rounded-2xl'>
-              <div className='w-full flex items-center justify-between gap-x-10'>
-              <p className='text-lg font-bold underline underline-offset-4'>{item?.title}</p>
+                <div className='w-full flex items-center justify-between gap-x-10'>
+                  
+              <p className='text-foreground/90 whitespace-normal' onClick={() => handleDescriptionOpen(item?.id)}>
+                  {descriptionToggle === item?.id  ?
+                    item?.todo :
+                    item?.todo.slice(0, 50) + (item?.todo?.length > 50 ? "...read more" : "")}
+                  </p>
+                  
                <div className='flex items-center gap-x-2 self-start'>
                 <Button variant={'ghost'} className='px-0' onClick={() => updateTodoStatus(item.id)}>{!item.status ? <ClipboardText className='text-gray-500' /> : <ClipboardTick className='text-green-500' />}</Button>
                 <Button variant={'ghost'} className='px-0' onClick={() => deleteTodo(item.id)}><Trash className='text-red-800 font-bold' /></Button>
               </div>
               </div>
 
-               <p className='text-foreground/50 whitespace-normal' onClick={() => handleDescriptionOpen(item?.id)}>
-                  {descriptionToggle === item?.id  ?
-                    item?.description :
-                    item?.description.slice(0, 50) + (item?.description?.length > 50 ? "...read more" : "")}
-                </p>
+              
             </div>
           ))}
           {todo?.length === 0 &&
