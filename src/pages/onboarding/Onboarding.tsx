@@ -33,7 +33,7 @@ export default function Onboarding() {
              initial="offscreen"
       whileInView="onscreen"
       viewport={{ once: true, amount: 0.8 }}
-      className="relative overflow-hidden xl:w-[500px] w-full h-[500px] mx-auto mb-5 rounded-xl z-10"
+      className="relative overflow-hidden xl:w-[500px] w-full h-[500px] mx-auto mb-20 rounded-xl z-10"
             >
       
           <img src={src} alt="image" className="w-full h-full object-cover object-center z-10"/>

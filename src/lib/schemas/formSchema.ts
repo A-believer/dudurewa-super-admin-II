@@ -1,26 +1,63 @@
 // src/schemas/formSchema.ts
+import { z } from "zod"
 
-import * as yup from "yup"
-
-export const loginFormSchema = yup
+export const loginFormSchema = z
   .object({
-    email: yup.string().required(),
-    password: yup.string().min(6).required(),
+    email: z.string({
+        required_error: "email is required",
+        invalid_type_error: "enter a valid email",
+  }).email(),
+    password: z.string({
+    required_error: "password is required",
+    invalid_type_error: "password is invalid"
+  }).min(6),
   })
-  .required()
+  
 
 
-  export const signUpformSchema = yup
+  export const signUpformSchema = z
     .object({
-    username: yup.string().required(),
-    email: yup.string().required(),
-    password: yup.string().min(6).required(),
+    username: z.string({
+        required_error: "username is required",
+        invalid_type_error: "enter a valid username",
+  }),
+    email: z.string({
+        required_error: "email is required",
+        invalid_type_error: "enter a valid email",
+  }).email(),
+    password: z.string({
+    required_error: "password is required",
+    })
+    .min(6)
+    .refine((value) => /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(value), {
+      message: "Password must have at least one capital letter, one number, and one special character.",
+    }),
   })
-  .required()
+  
 
-  export const todoFormSchema = yup
+  export const todoFormSchema = z
   .object({
-    title: yup.string().required(),
-    description: yup.string().required(),
+    title: z.string({
+    required_error: "title is required",
+  }).max(50),
+    description: z.string({
+    required_error: "title is required",
+  }).max(100),
   })
-  .required()
+  
+
+    export const orderFormSchema = z
+  .object({
+    customerName: z.string(),
+    shawarmaType: z.string(),
+    noOfWrap: z.string(),
+    location: z.string(),
+    customerContact: z.string().min(11).max(11),
+    riderName: z.string(),
+    deliveryFee: z.string(),
+    deliveryOption: z.string(),
+    message: z.string()
+  })
+  
+
+  // create a webapp with react vite and firebase for taking orders. Each order has an order name, order type and price. create two collections in firebase, one to take each order with as they come in with unique ids and the other collection with each document with an id of the date with a array that contains all the data for that day, the array updates anytime an order is created. 

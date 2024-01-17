@@ -31,7 +31,7 @@ export default function NavBar() {
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
   return (
-    <header className='sticky top-0 left-0  max-w-full mx-auto h-full z-50 bg-background pb-2'>
+    <header className='sticky xl:hidden block top-0 left-0  max-w-full mx-auto h-full z-50 bg-background pb-2'>
       <div className="w-[95%] mx-auto xl:hidden flex justify-between items-center">
         <Link to={`/`}>
               <Logo />

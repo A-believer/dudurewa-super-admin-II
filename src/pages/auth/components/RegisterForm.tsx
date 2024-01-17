@@ -4,24 +4,21 @@
 import { useForm } from "react-hook-form";
 import { Button } from '@/components/ui/button'
 import { signUpformSchema } from "@/lib/schemas/formSchema";
-import {yupResolver} from "@hookform/resolvers/yup"
+import {zodResolver} from "@hookform/resolvers/zod"
 import { useAuth } from "@/lib/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { z } from "zod";
 
 
-interface FormData {
-    username: string;
-    email: string;
-    password: string
-}
+type SignupValues = z.infer<typeof signUpformSchema>
 
 export default function Form() {
     const { signUp } = useAuth()
     const navigate = useNavigate()
-    const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
-    resolver: yupResolver(signUpformSchema),
+    const {register, handleSubmit, formState: {errors}} = useForm<SignupValues>({
+    resolver: zodResolver(signUpformSchema),
   })
-    const onSubmit = async ({email, password, username}: FormData) => {
+    const onSubmit = async ({email, password, username}: SignupValues) => {
         try {
             await signUp(email, password, username)
             navigate('/admin/dashboard')

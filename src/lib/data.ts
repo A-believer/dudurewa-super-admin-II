@@ -5,7 +5,7 @@ import {
   shawarmaOnboarding4,
   shawarmaOnboarding5,
   shawarmaOnboarding6
-} from "../../public/pngs";
+} from "../assets/pngs";
 
 
 export interface OnboardingProp {

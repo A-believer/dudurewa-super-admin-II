@@ -1,22 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Form from './components/todo-form'
 import { Button } from '@/components/ui/button'
 import { AddCircle, ClipboardText, ClipboardTick, Trash } from 'iconsax-react'
-import { useAuth } from '@/lib/context/AuthContext'
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase-config'
 import toast from 'react-hot-toast'
+import { useFirestore } from '@/lib/context/FirestoreContext'
 
 
 export default function Todolist() {
   const [openForm, setOpenForm] = useState<boolean>(false)
-  const {todo, getTodoList} = useAuth() 
+  const [descriptionToggle, setDescriptionToggle] = useState<string | null>(null)
+  const {todo, getTodoList, loadingTodo} = useFirestore() 
+
+    function handleDescriptionOpen(id: string) {
+    setDescriptionToggle((prevIndex) => (prevIndex === id ? null : id));
+  }
 
   const deleteTodo = async(id: string) => {
     try {
       await deleteDoc(doc(db, "Todos", id))
+      toast.error('todo deleted')
       getTodoList()
 
     } catch (error: any) {
@@ -30,40 +36,62 @@ export default function Todolist() {
       await updateDoc(todoRef, {
         status: true
       })
+      
+      toast.success("todo completed!")
       getTodoList()
-      toast.success("task completed!")
     } catch (error: any) {
       console.log(error.message)
     }
   }
 
+  useEffect(() => {
+    getTodoList()
+  }, [])
+
   return (
     <div className='w-full flex flex-col gap-y-5 py-6 relative'>
       
-      <p className='text-3xl underline underline-offset-4'>My Todo List</p>
+      <p className='text-xl font-black uppercase'>My Todo List</p>
      
       {openForm && <Form close={() => setOpenForm(false)} />}
 
       <div className='border border-foreground/50 p-5 flex flex-col justify-center items-center gap-y-10 w-full rounded-2xl relative mt-5'>
         <Button
           variant={'outline'}
-         className="flex items-center gap-x-2 text-lg border-[3px] border-orange py-5 px-4 w-fit ml-auto rounded-xl hover:bg-orange place-self-end"
+         className="flex items-center gap-x-2 md:text-lg text-sm border-[3px] border-orange py-5 px-4 w-fit ml-auto rounded-xl hover:bg-orange place-self-end"
           onClick={() => setOpenForm(prev => !prev)}>
           <AddCircle />
           <span>New Todo</span>
         </Button> 
-        <div className='w-full space-y-5 min-h-[30vh]'>
-          {todo.length > 0  ? todo?.map((item) => (
-            <div key={item.id} className='flex items-center justify-between w-full p-3 bg-foreground/5 rounded-2xl'>
-              <p>{item?.title}</p>
 
-              <div className='flex items-center gap-x-2'>
-                <Button variant={'ghost'} className='px-0' onClick={() => updateTodoStatus(item.id)}>{!item.status ? <ClipboardText className='text-gray-800'/> : <ClipboardTick className='text-green-500'/>}</Button>
-                <Button variant={'ghost'} className='px-0' onClick={() => deleteTodo(item.id)}><Trash className='text-red-800 font-bold'/></Button>
-              </div>
-          </div>
-          )) :
+
+        <div className='w-full space-y-5 min-h-[30vh]'>
+
+          {loadingTodo && 
           <div className='flex justify-center items-center text-3xl h-[30vh]'>
+            Loading Todos...
+            </div>}
+          
+          {todo.length > 0 &&
+            todo?.map((item) => (
+            <div key={item.id} className='flex flex-col gap-y-3 w-full p-3 bg-foreground/5 rounded-2xl'>
+              <div className='w-full flex items-center justify-between gap-x-10'>
+              <p className='text-lg font-bold underline underline-offset-4'>{item?.title}</p>
+               <div className='flex items-center gap-x-2 self-start'>
+                <Button variant={'ghost'} className='px-0' onClick={() => updateTodoStatus(item.id)}>{!item.status ? <ClipboardText className='text-gray-500' /> : <ClipboardTick className='text-green-500' />}</Button>
+                <Button variant={'ghost'} className='px-0' onClick={() => deleteTodo(item.id)}><Trash className='text-red-800 font-bold' /></Button>
+              </div>
+              </div>
+
+               <p className='text-foreground/50 whitespace-normal' onClick={() => handleDescriptionOpen(item?.id)}>
+                  {descriptionToggle === item?.id  ?
+                    item?.description :
+                    item?.description.slice(0, 50) + (item?.description?.length > 50 ? "...read more" : "")}
+                </p>
+            </div>
+          ))}
+          {todo?.length === 0 &&
+            <div className={`flex justify-center items-center text-3xl h-[30vh] ${loadingTodo && 'hidden'}`}>
             No tasks
         </div>
         }
