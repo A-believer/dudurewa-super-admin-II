@@ -1,24 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useAuth } from "@/lib/context/AuthContext";
+// import { useAuth } from "@/lib/context/AuthContext";
 import { Footer, Logo, NavBar, NavBarDesktop } from "./";
 import { ModeToggle } from "./mode-toggle"
 import ProtectedRouteWrapper from "./protected-routes";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 // import { useEffect } from "react";
 import { FirestoreProvider } from "@/lib/context/FirestoreContext";
 import { Toaster } from "react-hot-toast";
 
 export function AdminContainer({ children, classname }: { children: React.ReactNode; classname: string }) {
   
-  const { user } = useAuth()
-  // const navigate = useNavigate()
-
   
- if (!user) {
-   // navigate('/auth/login')
-   <Navigate to={`/auth/login`}/>
-  }
- 
   return (
     <FirestoreProvider>
       <ProtectedRouteWrapper>
