@@ -3,21 +3,22 @@ import { useAuth } from "@/lib/context/AuthContext";
 import { Footer, Logo, NavBar, NavBarDesktop } from "./";
 import { ModeToggle } from "./mode-toggle"
 import ProtectedRouteWrapper from "./protected-routes";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
+// import { useEffect } from "react";
 import { FirestoreProvider } from "@/lib/context/FirestoreContext";
 import { Toaster } from "react-hot-toast";
 
 export function AdminContainer({ children, classname }: { children: React.ReactNode; classname: string }) {
   
   const { user } = useAuth()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
-  useEffect(() => {
+  
  if (!user) {
-    navigate('/auth/login')
+   // navigate('/auth/login')
+   <Navigate to={`/auth/login`}/>
   }
-  }, [])
+ 
   return (
     <FirestoreProvider>
       <ProtectedRouteWrapper>
