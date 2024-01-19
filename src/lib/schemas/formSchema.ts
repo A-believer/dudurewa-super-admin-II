@@ -43,15 +43,28 @@ export const loginFormSchema = z
   })
   
 
-    export const orderFormSchema = z
-  .object({
-    customerName: z.string(),
-    shawarmaType: z.string(),
-    noOfWrap: z.string(),
-    location: z.string(),
-    customerContact: z.string().min(11).max(11),
-    riderName: z.string(),
-    deliveryFee: z.string(),
+export const orderFormSchema = z.object({
+    customerName: z.string({
+        required_error: "Customer Name is required",
+  }),
+    shawarmaType: z.string({
+        required_error: "Choose a Type",
+  }),
+    noOfWrap: z.string({
+        invalid_type_error: "Invalid Value",
+  }),
+    location: z.string({
+        required_error: "Enter Customer's Name",
+  }),
+    customerContact: z.string({
+        required_error: "Enter Customer Contact",
+  }).min(11).max(11),
+    riderName: z.string({
+        required_error: "Enter Rider's Name",
+  }),
+    deliveryFee: z.string({
+        invalid_type_error: "Invalid Value",
+  }),
     deliveryOption: z.string(),
     message: z.string()
-  })
+})

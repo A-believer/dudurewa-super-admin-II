@@ -33,7 +33,8 @@ export default function Form({close }: {close: () => void}) {
         message
     }: OrderValues) => {
         try {
-            await addNewOrderHandler(customerName,
+          await addNewOrderHandler(
+            customerName,
         shawarmaType,
         noOfWrap,
         location,
@@ -42,6 +43,7 @@ export default function Form({close }: {close: () => void}) {
         deliveryFee,
         deliveryOption,
             message)
+          
             console.log({
         customerName,
         shawarmaType,
@@ -71,7 +73,7 @@ export default function Form({close }: {close: () => void}) {
           
           {/* Customer Name  */}
           <div className="flex flex-col gap-y-2 w-full">
-            <label htmlFor="customerName" className="text-lg">Customer Name</label>
+            <label htmlFor="customerName" className="text-sm font-bold">Customer Name</label>
               <input
                   type="text"
                   id="customerName"
@@ -86,7 +88,7 @@ export default function Form({close }: {close: () => void}) {
               
             {/* shawarma type  */}
             <div className="flex flex-col gap-y-2 w-[50%]">
-            <label htmlFor="shawarmaType" className="text-lg">Shawarma Type</label>
+            <label htmlFor="shawarmaType" className="text-sm font-bold">Shawarma Type</label>
             <select
                 className="bg-transparent p-2 outline-none focus:bg-transparent active:bg-transparent border-4 focus:border-4 rounded-xl"
                 {...register("shawarmaType")}>
@@ -106,14 +108,16 @@ export default function Form({close }: {close: () => void}) {
               </span>}
               </div>
 
-            {/* noOfWrap */}
-            <div className="flex flex-col gap-y-2 w-[40%]">
-            <label htmlFor="noOfWrap" className="text-lg">No of wraps</label>
+          {/* noOfWrap */}
+          <div className="flex flex-col gap-y-2 w-[40%]">
+          <label htmlFor="noOfWrap" className="text-sm font-bold">
+            No of wraps
+          </label>
               <input
                 type="text"
                 id="noOfWrap"
                 {...register("noOfWrap")}
-                className="p-2 rounded-xl bg-transparent outline-none focus:bg-transparent active:bg-transparent border-4 focus:border-4"/>
+                className="p-2 rounded-xl bg-transparent outline-none focus:bg-transparent active:bg-transparent border-4 focus:border-4 remove-arrow"/>
               {errors.noOfWrap && <span className="text-red-600">
                   {errors.noOfWrap.message}
               </span>}
@@ -122,7 +126,7 @@ export default function Form({close }: {close: () => void}) {
 
           {/* location  */}
           <div className="flex flex-col gap-y-2 w-full">
-            <label htmlFor="location" className="text-lg">Location</label>
+            <label htmlFor="location" className="text-sm font-bold">Location</label>
               <textarea
                   rows={2}
                   id="location"
@@ -135,7 +139,7 @@ export default function Form({close }: {close: () => void}) {
 
           {/* customer contact  */}
           <div className="flex flex-col gap-y-2 w-full">
-            <label htmlFor="customerContact" className="text-lg">Customer Contact</label>
+            <label htmlFor="customerContact" className="text-sm font-bold">Customer Contact</label>
               <input
                   type="text"
                   id="customerContact"
@@ -148,7 +152,7 @@ export default function Form({close }: {close: () => void}) {
 
           {/* Delivery Option  */}
             <div className="flex flex-col gap-y-2 w-full">
-            <label htmlFor="deliveryOption" className="text-lg">Delivery Option</label>
+            <label htmlFor="deliveryOption" className="text-sm font-bold">Delivery Option</label>
             <select
                 className="bg-transparent p-2 outline-none focus:bg-transparent active:bg-transparent border-4 focus:border-4 rounded-xl"
                 {...register("deliveryOption")}>
@@ -169,7 +173,7 @@ export default function Form({close }: {close: () => void}) {
               
               {/* Rider Name  */}
               <div className="flex flex-col gap-y-2 w-[50%]">
-            <label htmlFor="riderName" className="text-lg">Rider Name</label>
+            <label htmlFor="riderName" className="text-sm font-bold">Rider Name</label>
               <input
                   type="text"
                   id="riderName"
@@ -183,13 +187,12 @@ export default function Form({close }: {close: () => void}) {
 
               {/* Delivery Fee  */}
               <div className="flex flex-col gap-y-2 w-[35%]">
-                <label htmlFor="deliveryFee" className="text-lg">Delivery Fee</label>
+                <label htmlFor="deliveryFee" className="text-sm font-bold">Delivery Fee</label>
                   <input
-                    //   disabled={control("deliveryOption") === "Pick Up"}
                   type="text"
                   id="deliveryFee"
                   {...register("deliveryFee")}
-                  className="p-2 rounded-xl bg-transparent outline-none focus:bg-transparent active:bg-transparent border-4 focus:border-4"/>
+                  className="p-2 rounded-xl bg-transparent outline-none focus:bg-transparent active:bg-transparent border-4 focus:border-4 remove-arrow"/>
               {errors.deliveryFee && <span className="text-red-600">
                   {errors.deliveryFee.message}
               </span>}
@@ -199,7 +202,7 @@ export default function Form({close }: {close: () => void}) {
 
           {/* message  */}
           <div className="flex flex-col gap-y-2 w-full">
-            <label htmlFor="location" className="text-lg">Message</label>
+            <label htmlFor="location" className="text-sm font-bold">Message</label>
               <textarea
                   rows={2}
                   id="message"

@@ -9,13 +9,15 @@ import { db } from "../firebase-config";
 interface FirestoreContextProps {
 children: ReactNode;
 }
-
 interface TodoProps {
   id: string
   todo: string
   status: boolean
 }
 
+interface NewOrderProps {
+
+}
 interface OrderProps {
   id: string,
     customerName: string,
@@ -26,7 +28,6 @@ interface OrderProps {
     riderName: string,
     deliveryFee: string,
     deliveryOption: string,
-    price: number,
     message: string
 }
 
@@ -51,18 +52,13 @@ interface FirestoreProviderProps {
     getOrderList: () => Promise<void>
 }
 
-
-
 const FirestoreContext = createContext<FirestoreProviderProps | undefined>(undefined)
 
-
 export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children }) => {
-    
     const [todo, setTodo] = useState<TodoProps[]>([])
     const [loadingTodo, setLoadingTodo] = useState<boolean>(true)
     const [order, setOrder] = useState<OrderProps[]>([])
   const [loadingOrder, setLoadingOrder] = useState<boolean>(true)
-  const [shawarmaTypePrice, setShawarmaTypePrice] = useState<number>(0)
     
     const addTodoHandler = async(todo:string) => {
     try {
@@ -109,11 +105,10 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
 
     const date = new Date();
     const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    const orderRef = doc(db, "Orders", uuidv4())
+    // const orderRef = doc(db, "Orders", uuidv4())
     const dailyOrdersRef = doc(db, "OrderHistory", dateString)
-    const dailyOrdersDoc = await getDoc(dailyOrdersRef)
-    
-    const newOrder = {
+
+    const newOrder: NewOrderProps = {
         customerName: customerName,
         shawarmaType: shawarmaType,
         noOfWrap: noOfWrap,
@@ -122,47 +117,34 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
         riderName: riderName,
         deliveryFee: deliveryFee,
         deliveryOption: deliveryOption,
-        price: parseFloat(noOfWrap) * shawarmaTypePrice,
         message: message,
-        total: (parseFloat(noOfWrap) * shawarmaTypePrice) + parseFloat(deliveryFee),
-        timestamp: serverTimestamp(),
         status: false,
         id: uuidv4()
       }
 
-
     try {
-      if (shawarmaType === "Lite") {
-        setShawarmaTypePrice(1700)
-      }
-      if (shawarmaType === "Regular") {
-        setShawarmaTypePrice(2000)
-      }
-      if (shawarmaType === "Pro") {
-        setShawarmaTypePrice(2300)
-      }
-      await setDoc(orderRef, newOrder);
+      // await setDoc(orderRef, newOrder);
+      const dailyOrdersDoc = await getDoc(dailyOrdersRef)
 
       if (dailyOrdersDoc.exists()) {
       const updatedOrders = [...dailyOrdersDoc.data().orders, newOrder];
         await updateDoc(dailyOrdersRef, {
           id: dateString,
-      total: "",
           orders: updatedOrders
         });
     } else {
-        await setDoc(dailyOrdersRef, {
+        await setDoc(doc(db, "OrderHistory", dateString), {
           id: dateString,
-      total: "",
+      total: 0,
           orders: [newOrder]
         });
     }
-
    
     } catch (error: any) {
       console.log(error.message)
     }
   }
+
 
   const getOrderList = async () => {
       const orderRef = collection(db, "Orders")
