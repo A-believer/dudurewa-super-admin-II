@@ -13,9 +13,9 @@ type Orders = {
 
 export function getShawarmaPrice(shawarmaType: string, noOfWraps: number) {
     let price;
-    if (shawarmaType === "Lite") {
+    if (shawarmaType === "lite") {
         price = noOfWraps * 1700
-    } else if (shawarmaType === "Regular") {
+    } else if (shawarmaType === "regular") {
         price = noOfWraps * 2000
     } else {
         price = noOfWraps * 2300
@@ -28,11 +28,12 @@ export const getDailyTotal = (orders: Orders[]) => {
     let total = 0
     let price = 0
     for (const order of orders) {
-      if (order.shawarmaType === "Lite") {
+      if (order.shawarmaType === "lite") {
         price = Number(order.noOfWrap) * 1700
-    } else if (order.shawarmaType === "Regular") {
+        }
+        if (order.shawarmaType === "regular") {
         price = Number(order.noOfWrap) * 2000
-    } else {
+        } if(order.shawarmaType === "pro")    {
         price = Number(order.noOfWrap) * 2300
         }
         total += price

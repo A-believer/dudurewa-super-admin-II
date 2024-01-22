@@ -133,8 +133,7 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
       total: 0,
           orders: [newOrder]
         });
-      }
-      getOrderList()
+    }
     } catch (error: any) {
       console.log(error.message)
     }
@@ -146,6 +145,7 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
     const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     const orderRef = doc(db, "OrderHistory", dateString)
     
+
     try { 
       const orderDoc = await getDoc(orderRef)
       const dailyOrders: DocumentData[] = []
@@ -159,7 +159,7 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
     }
   }
 
-  const firestoreProviderValue: FirestoreProviderProps = {
+    const firestoreProviderValue: FirestoreProviderProps = {
         todo,
         loadingTodo,
         getTodoList,

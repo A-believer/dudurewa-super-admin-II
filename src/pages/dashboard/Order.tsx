@@ -69,7 +69,7 @@ getOrderList()
       </ul>
 
       <ul className="text-center border rounded-t-xl">
-        <li className="flex items-center justify-between border-b-2 pb-1 pt-3 px-2 bg-foreground text-background rounded-t-xl">
+        <li className="flex items-center justify-between border-b-2 pb-1 pt-3 px-2 bg-foreground/70 text-background rounded-t-xl">
           <span className="flex items-center gap-x-2">
             <i>S/N</i>
             <i>Name</i></span>
