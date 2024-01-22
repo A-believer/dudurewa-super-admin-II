@@ -19,7 +19,7 @@ export default function Form({close }: {close: () => void}) {
     resolver: zodResolver(orderFormSchema),
      })
      
-    const { register, handleSubmit, reset, formState: { errors } } = form
+    const { watch, register, handleSubmit, reset, formState: { errors } } = form
     
     const onSubmit = async ({
         customerName,
@@ -174,7 +174,8 @@ export default function Form({close }: {close: () => void}) {
               {/* Rider Name  */}
               <div className="flex flex-col gap-y-2 w-[50%]">
             <label htmlFor="riderName" className="text-sm font-bold">Rider Name</label>
-              <input
+          <input
+            disabled={watch('deliveryOption') === "Pick Up"}
                   type="text"
                   id="riderName"
                   {...register("riderName")}
@@ -188,7 +189,8 @@ export default function Form({close }: {close: () => void}) {
               {/* Delivery Fee  */}
               <div className="flex flex-col gap-y-2 w-[35%]">
                 <label htmlFor="deliveryFee" className="text-sm font-bold">Delivery Fee</label>
-                  <input
+          <input
+            disabled={watch('deliveryOption') === "Pick Up"}
                   type="text"
                   id="deliveryFee"
                   {...register("deliveryFee")}

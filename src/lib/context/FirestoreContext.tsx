@@ -3,7 +3,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { ReactNode, createContext, useContext, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { collection, doc, getDoc, getDocs, orderBy, query, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
+import { DocumentData, collection, doc, getDoc, getDocs, orderBy, query, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 import { db } from "../firebase-config";
 interface FirestoreContextProps {
@@ -15,11 +15,8 @@ interface TodoProps {
   status: boolean
 }
 
-interface NewOrderProps {
-
-}
-interface OrderProps {
-  id: string,
+export interface NewOrderProps {
+    id: string,
     customerName: string,
     shawarmaType: string,
     noOfWrap: string,
@@ -28,7 +25,8 @@ interface OrderProps {
     riderName: string,
     deliveryFee: string,
     deliveryOption: string,
-    message: string
+  message: string,
+  status: boolean
 }
 
 interface FirestoreProviderProps {
@@ -45,7 +43,7 @@ interface FirestoreProviderProps {
         message: string
         ) => Promise<void>
     todo: TodoProps[]
-    order: OrderProps[]
+    order: DocumentData[]
     loadingTodo: boolean
     loadingOrder: boolean
     getTodoList: () => Promise<void>
@@ -57,7 +55,7 @@ const FirestoreContext = createContext<FirestoreProviderProps | undefined>(undef
 export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children }) => {
     const [todo, setTodo] = useState<TodoProps[]>([])
     const [loadingTodo, setLoadingTodo] = useState<boolean>(true)
-    const [order, setOrder] = useState<OrderProps[]>([])
+    const [order, setOrder] = useState<DocumentData[]>([])
   const [loadingOrder, setLoadingOrder] = useState<boolean>(true)
     
     const addTodoHandler = async(todo:string) => {
@@ -105,7 +103,6 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
 
     const date = new Date();
     const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    // const orderRef = doc(db, "Orders", uuidv4())
     const dailyOrdersRef = doc(db, "OrderHistory", dateString)
 
     const newOrder: NewOrderProps = {
@@ -123,9 +120,7 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
       }
 
     try {
-      // await setDoc(orderRef, newOrder);
       const dailyOrdersDoc = await getDoc(dailyOrdersRef)
-
       if (dailyOrdersDoc.exists()) {
       const updatedOrders = [...dailyOrdersDoc.data().orders, newOrder];
         await updateDoc(dailyOrdersRef, {
@@ -138,8 +133,8 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
       total: 0,
           orders: [newOrder]
         });
-    }
-   
+      }
+      getOrderList()
     } catch (error: any) {
       console.log(error.message)
     }
@@ -147,26 +142,24 @@ export const FirestoreProvider: React.FC<FirestoreContextProps> = ({ children })
 
 
   const getOrderList = async () => {
-      const orderRef = collection(db, "Orders")
-
+    const date = new Date();
+    const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    const orderRef = doc(db, "OrderHistory", dateString)
+    
     try { 
-      const q = query(orderRef, orderBy("timestamp", "desc"))
-      const getOrder = await getDocs(q)
-      const allOrder: any[] = []
-      getOrder.docs.map((doc) => (allOrder.push({
-        id: doc.id,
-        ...doc.data()
-      })))
-      
-      setOrder(allOrder)
+      const orderDoc = await getDoc(orderRef)
+      const dailyOrders: DocumentData[] = []
+      if ( orderDoc.exists()) {
+       dailyOrders.push(orderDoc.data())
+      }
+      setOrder(dailyOrders)
       setLoadingOrder(false)
     } catch (error: any) {
       toast.error('failed to fetch todos!!')
     }
   }
-  
 
-    const firestoreProviderValue: FirestoreProviderProps = {
+  const firestoreProviderValue: FirestoreProviderProps = {
         todo,
         loadingTodo,
         getTodoList,

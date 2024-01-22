@@ -46,7 +46,7 @@ export default function Todolist() {
   return (
     <div className='w-full flex flex-col gap-y-5 py-6 relative justify-center '>
       
-      <p className='text-xl font-black uppercase'>My Todo List</p>
+      <p className='text-xl font-black uppercase'>To-do app</p>
      
       {openForm &&
         <div className='absolute top-0 left-0 bg-black/10 flex items-center justify-center w-full h-full'>
@@ -60,7 +60,7 @@ export default function Todolist() {
          className="flex items-center gap-x-2 md:text-lg text-sm border-[3px] border-orange py-5 px-4 w-fit ml-auto rounded-xl hover:bg-orange place-self-end"
           onClick={() => setOpenForm(prev => !prev)}>
           <AddCircle />
-          <span>New Todo</span>
+          <span>new to-do</span>
         </Button> 
 
 
@@ -68,7 +68,7 @@ export default function Todolist() {
 
           {loadingTodo && 
           <div className='flex justify-center items-center text-3xl h-[30vh]'>
-            Loading Todos...
+            Loading To-dos...
             </div>}
           
           {todo.length > 0 &&
@@ -90,8 +90,7 @@ export default function Todolist() {
           ))}
           {todo?.length === 0 &&
             <div className={`flex justify-center items-center text-3xl h-[30vh] ${loadingTodo && 'hidden'}`}>
-            No tasks
-        </div>
+            No to-do        </div>
         }
         </div>  
       </div>
